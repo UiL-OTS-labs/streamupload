@@ -1,1 +1,5 @@
 <h1>Video ingest form</h1>
+<form action="">{% csrf_token %}
+<table>{{ form.as_table }}</table>
+<input type="submit" />
+</form>
