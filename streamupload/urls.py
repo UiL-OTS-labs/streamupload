@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from ingest.views import IngestFileView, IngestStreamView
+from ingest.views import IngestFileView, IngestStreamView, FilesView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ingest/file/<str:token>/', IngestFileView.as_view()),
-    path('ingest/stream/<str:token>/', IngestStreamView.as_view()),
+    path('ingest/file/', IngestFileView.as_view()),
+    path('ingest/stream/', IngestStreamView.as_view()),
+    path('files/', FilesView.as_view()),
 ]

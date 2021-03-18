@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Uploads</h1>
+
+{% for token, files in udict.items %}
+
+<h2>{{ token }}</h2> 
+
+<ul>
+{% for file in files %}
+<li>
+{{ file.start_time }}
+</li>
+{% endfor %}
+</ul>
+
+
+{% endfor %}
+
+{% endblock %}

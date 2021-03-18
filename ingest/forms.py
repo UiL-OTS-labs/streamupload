@@ -5,4 +5,4 @@ class IngestForm(forms.ModelForm):
     
     class Meta:
         model = Upload
-        fields = ['blob']
+        fields = ['blob', 'token']
