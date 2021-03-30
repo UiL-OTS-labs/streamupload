@@ -62,7 +62,7 @@ class FilesView(TemplateView):
         tokens = Token.objects.all()
         
         for t in tokens:
-            qs = Upload.objects.filter(token=t).order_by('start_time')
+            qs = Upload.objects.filter(token=t).order_by('-start_time')
             udict[t.token] = qs
         
         context['udict'] = udict

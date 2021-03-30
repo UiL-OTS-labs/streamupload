@@ -1,4 +1,5 @@
 from .models import Token
+from django import forms
 from django.core.exceptions import ObjectDoesNotExist
 
 class TokenCharField(forms.CharField):

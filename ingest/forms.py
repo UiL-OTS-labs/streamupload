@@ -1,5 +1,6 @@
 from django import forms
-from .models import Token, Upload        
+from .models import Token, Upload     
+from .fields import TokenCharField
 
 class IngestForm(forms.ModelForm):
     

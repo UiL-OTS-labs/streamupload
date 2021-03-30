@@ -11,7 +11,7 @@
 <ul>
 {% for file in files %}
 <li>
-{{ file.start_time }}
+{{ file.start_time }} [ <a href="{{file.blob.url}}">Download</a> ]
 </li>
 {% endfor %}
 </ul>
