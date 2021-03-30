@@ -4,8 +4,11 @@ from django.views.generic.base import TemplateView
 from .models import Upload, Token
 from .forms import IngestForm
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
+from pprint import pprint
+
 
 class IngestFileView(FormView):
     template_name = 'ingest.html'
@@ -13,9 +16,16 @@ class IngestFileView(FormView):
     form_class = IngestForm
     success_url = '/files/'
     
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+    
     def form_invalid(self, instance):
         
         print('\n\nForm was INvalid \n\n')
+        pprint(instance.cleaned_data)
+        pprint(instance.errors)
+        return super().form_invalid(instance)
     
     def form_valid(self, instance):
         

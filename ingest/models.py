@@ -12,3 +12,7 @@ class Upload(models.Model):
     token = models.ForeignKey(Token, on_delete=models.CASCADE)
     blob = models.FileField()
     start_time = models.DateTimeField(auto_now=True)
+
+
+
+# TODO upload_to function, filename based on start_time
