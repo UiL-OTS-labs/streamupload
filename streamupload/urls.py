@@ -21,6 +21,7 @@ from ingest.views import IngestFileView, IngestStreamView, FilesView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('ingest/file/', IngestFileView.as_view()),
     path('ingest/stream/', IngestStreamView.as_view()),
     path('files/', FilesView.as_view()),
