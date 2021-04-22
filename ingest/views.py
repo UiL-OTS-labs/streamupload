@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.db.models import Q
+
 from django.views.generic.edit import FormView
 from django.views.generic.base import TemplateView
 from .models import Upload, Token
@@ -7,11 +9,13 @@ from .forms import IngestForm
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from pprint import pprint
 
 
 class IngestFileView(FormView):
-    template_name = 'ingest.html'
+    template_name = 'ingest/ingest.html'
     model = Upload
     form_class = IngestForm
     success_url = '/files/'
@@ -34,7 +38,7 @@ class IngestFileView(FormView):
         return super().form_valid(instance)
 
 class IngestStreamView(FormView):
-    template_name = 'ingest.html'
+    template_name = 'ingest/ingest.html'
     model = Upload
     form_class = IngestForm
     success_url = '/files/'
@@ -50,16 +54,22 @@ class IngestStreamView(FormView):
         return super().form_valid(instance)
     
 
-class FilesView(TemplateView):
+class FilesView(LoginRequiredMixin, TemplateView):
     
-    template_name = "files_list.html"
+    template_name = "ingest/files_list.html"
     
     def get_context_data(self, **kwargs):
         
         context = super().get_context_data(**kwargs)
+        user = self.request.user
         
-        udict = {}    
-        tokens = Token.objects.all()
+        # Staff can view all
+        if user.is_staff:
+            tokens = Token.objects.all()
+        else:
+            tokens = get_user_tokens(user)
+        
+        udict = {}
         
         for t in tokens:
             qs = Upload.objects.filter(token=t).order_by('-start_time')
@@ -69,4 +79,12 @@ class FilesView(TemplateView):
         
         return context
     
+def get_user_tokens(user):
     
+    user_tokens = set(user.tokens.all())
+    groups = user.groups.all()
+    for g in groups:
+        for t in g.tokens.all():
+            user_tokens.add(t)
+    
+    return user_tokens

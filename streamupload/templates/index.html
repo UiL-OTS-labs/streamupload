@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+<p>Documentation is still in development. This application is hosted as a proof of concept, please do not rely on it to store any sensitive data.</p>
+
+{% else %}
+<p>Please
+<a href="{% url 'login' %}">log in</a>
+to access this resource.
+</p>
+
+{% endif %}
+
+{% endblock %}

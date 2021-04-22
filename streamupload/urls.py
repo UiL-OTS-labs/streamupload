@@ -17,14 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 
+from .views import HomeView
 from ingest.views import IngestFileView, IngestStreamView, FilesView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', HomeView.as_view(), name='index'),
+    path('admin/', admin.site.urls, name='admin'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('ingest/file/', IngestFileView.as_view()),
+    path('ingest/file/', IngestFileView.as_view(), name='ingest'),
     path('ingest/stream/', IngestStreamView.as_view()),
-    path('files/', FilesView.as_view()),
+    path('files/', FilesView.as_view(), name='files'),
 ]
 
 from django.conf.urls.static import static
