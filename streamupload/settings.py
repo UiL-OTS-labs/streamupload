@@ -118,6 +118,9 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
 
+# URL to visit after login
+LOGIN_REDIRECT_URL = '/'
+
 # Allow localhost as common origin
 # (very bad idea in production #TODO)
 CORS_ALLOW_ALL_ORIGINS = True
