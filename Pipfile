@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 django = "~=2.2"
 bpython = "*"
+django-cors-headers = "~=3.7"
 
 [dev-packages]
 
