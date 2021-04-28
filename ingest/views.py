@@ -81,7 +81,7 @@ class FilesView(LoginRequiredMixin, TemplateView):
     
 def get_user_tokens(user):
     
-    user_tokens = set(user.tokens.all())
+    user_tokens = set(user.token_set.all())
     groups = user.groups.all()
     for g in groups:
         for t in g.tokens.all():
