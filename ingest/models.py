@@ -7,8 +7,10 @@ class Token(models.Model):
     
     token = models.CharField(max_length=100)
     active = models.BooleanField()
-    users = models.ManyToManyField(User)
-    groups = models.ManyToManyField(Group)
+    users = models.ManyToManyField(User,
+                                   blank=True)
+    groups = models.ManyToManyField(Group,
+                                    blank=True)
     
     def __str__(self):
         return self.token
