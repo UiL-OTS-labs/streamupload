@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
+from.utils import UploadFilenameFactory
 
 # Create your models here.
 
@@ -18,7 +19,7 @@ class Token(models.Model):
 class Upload(models.Model):
     
     token = models.ForeignKey(Token, on_delete=models.CASCADE)
-    blob = models.FileField()
+    blob = models.FileField(upload_to=UploadFilenameFactory('bindata'))
     start_time = models.DateTimeField(auto_now=True)
     
     def __str__(self):
