@@ -6,7 +6,8 @@ from.utils import UploadFilenameFactory
 
 class Token(models.Model):
     
-    token = models.CharField(max_length=100)
+    token = models.CharField(max_length=100,
+                             unique=True)
     active = models.BooleanField()
     users = models.ManyToManyField(User,
                                    blank=True)
@@ -18,7 +19,7 @@ class Token(models.Model):
 
 class Upload(models.Model):
     
-    token = models.ForeignKey(Token, on_delete=models.CASCADE)
+    token = models.ForeignKey(Token, on_delete=models.PROTECT)
     blob = models.FileField(upload_to=UploadFilenameFactory('bindata'))
     start_time = models.DateTimeField(auto_now=True)
     

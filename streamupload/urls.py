@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 
 from .views import HomeView
-from ingest.views import IngestFileView, IngestStreamView, FilesView
+from ingest.views import IngestFileView, IngestStreamView, FilesView, TokensView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='index'),
@@ -27,6 +27,7 @@ urlpatterns = [
     path('ingest/file/', IngestFileView.as_view(), name='ingest'),
     path('ingest/stream/', IngestStreamView.as_view()),
     path('files/', FilesView.as_view(), name='files'),
+    path('tokens/', TokensView.as_view(), name='tokens'),
 ]
 
 from django.conf.urls.static import static

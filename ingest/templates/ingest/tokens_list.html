@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Manage Tokens</h2>
+
+<p>Be aware that when pressing submit, you will both create new tokens and delete those which are checked.</p>
+
+<p>Only tokens with no uploads associated with them can be deleted.</p>
+
+{% if form.non_field_errors %}
+<h3>Errors</h3>
+
+<p>{{form.non_field_errors }}</p>
+
+{% endif %}
+
+<form action="" method="post">
+
+<h2>Create tokens</h2>
+
+<p>Please enter your desired new tokens in the box below, separated by newlines.</p>
+
+{{ form.new_tokens }}
+
+<p>Group for new tokens: {{form.group_for}}</p>
+
+<h2>Delete tokens</h2> 
+
+<p>Please tick the box next to each token that you wish to delete.</p>
+
+<table>
+
+{% csrf_token %}
+
+
+{% for field in form %}
+
+{% if field.name != 'new_tokens' and field.name != 'group_for' %}
+
+<tr><td>{{field}}</td><td>{{field.label}}</td></tr>
+
+{% endif %}
+
+{% endfor %}
+
+
+
+
+</table>
+
+<br />
+
+
+<input type="submit" value="Create and delete">
+
+</form>
+
+{% endblock %}
