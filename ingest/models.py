@@ -6,7 +6,8 @@ from.utils import UploadFilenameFactory
 
 class Token(models.Model):
     
-    token = models.CharField(max_length=100)
+    token = models.CharField(max_length=100,
+                             unique=True)
     active = models.BooleanField()
     users = models.ManyToManyField(User,
                                    blank=True)

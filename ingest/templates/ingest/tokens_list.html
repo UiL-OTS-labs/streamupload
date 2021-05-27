@@ -8,7 +8,12 @@
 
 <p>Only tokens with no uploads associated with them can be deleted.</p>
 
-<p>{{ debug_p }} </p>
+{% if form.non_field_errors %}
+<h3>Errors</h3>
+
+<p>{{form.non_field_errors }}</p>
+
+{% endif %}
 
 <form action="" method="post">
 

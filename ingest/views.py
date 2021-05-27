@@ -11,6 +11,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User, Group
+
 
 from .utils import get_user_tokens
 from pprint import pprint
@@ -119,10 +121,24 @@ class TokensView(LoginRequiredMixin, FormView):
     
     def form_valid(self, instance):
         
-        new_tokens = instance.cleaned_data['new_tokens']
+        self.new_tokens = instance.cleaned_data['new_tokens']
+        self.deleted_tokens = instance.cleaned_data['deleted']
+        group_name = instance.cleaned_data['group_for']
+        self.new_token_group = Group.objects.get(name=group_name)
         
-        print(self.requested_tokens)
-        self.get_context_data(debug_p = instance.cleaned_data)
+        for token_name in self.deleted_tokens:
+            tokens = Token.objects.filter(token=token_name)
+            for t in tokens:
+                t.delete()
+        
+        for token_name in self.new_tokens:
+            token = Token(token=token_name,
+                          active=True
+                          )
+            token.save()
+            token.groups.add(self.new_token_group)
+            token.users.add(self.request.user)
+            token.save()
         
         return self.get(self.request)
         
