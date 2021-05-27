@@ -18,7 +18,7 @@ class Token(models.Model):
 
 class Upload(models.Model):
     
-    token = models.ForeignKey(Token, on_delete=models.CASCADE)
+    token = models.ForeignKey(Token, on_delete=models.PROTECT)
     blob = models.FileField(upload_to=UploadFilenameFactory('bindata'))
     start_time = models.DateTimeField(auto_now=True)
     

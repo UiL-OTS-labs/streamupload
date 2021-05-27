@@ -57,3 +57,16 @@ class UploadFilenameFactory:
         fn_parts = filter(not_empty, fn_parts)
         
         return '_'.join(fn_parts) + extension 
+
+
+ 
+    
+def get_user_tokens(user):
+    
+    user_tokens = set(user.token_set.all())
+    groups = user.groups.all()
+    for g in groups:
+        for t in g.token_set.all():
+            user_tokens.add(t)
+    
+    return user_tokens
