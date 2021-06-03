@@ -13,6 +13,12 @@ class IngestForm(forms.ModelForm):
         model = Upload
         fields = ['blob', 'token']
     
+    def clean(self):
+        
+        cleaned_data = super().clean()
+        cleaned_data['token'] = cleaned_data['token'].lower()
+        
+        return cleaned_data
 
         
 
@@ -49,15 +55,21 @@ class TokenManagementForm(forms.Form):
         # Split new tokens input into a token per line
         tokens = self.cleaned_data.get('new_tokens')
         tokens = tokens.strip()
-        tokens = [t.strip() for t in tokens.split()]
+        tokens = [t.strip().lower() for t in tokens.split()]
         self.cleaned_data['new_tokens'] = tokens
         
         self.check_exists(tokens)
         
         # Find all tokens marked for deletion
         keys = [k for k in self.cleaned_data if k[:7] == 'delete_' ]
+        
+        # That are marked True
         keys = [k for k in keys if self.cleaned_data[k]]
+        
+        # Then remove the delete_ prefix
         keys = [k[7:] for k in keys ]
+        
+        # Create a new entry with the tokens to be deleted
         self.cleaned_data['deleted'] = keys
         
         for t in self.cleaned_data['deleted']:
